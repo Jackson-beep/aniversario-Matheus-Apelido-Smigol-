@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✨</title>
+
+<style>
+   body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+    background-image: url('miau.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain; /* 🔥 mostra a imagem inteira */
+
+    background-color: black; /* importante pra não ficar feio nas bordas */
+
+    height: 100vh;
+
+    transition: background-image 1.5s ease;
+}
+
+    /* estrelas */
+    .estrela {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: white;
+        border-radius: 50%;
+        box-shadow: 0 0 20px white;
+        animation: cair linear infinite;
+    }
+
+    @keyframes cair {
+        0% {
+            transform: translateY(-10vh);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(110vh);
+            opacity: 0;
+        }
+    }
+
+    /* imagens laterais */
+    .lateral {
+        position: absolute;
+        width: 250px;
+        opacity: 0;
+        transition: all 1s ease;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- música -->
+<audio src="oladobom de ser.mp3" autoplay loop></audio>
+
+<button id="btnVoltar" onclick="voltar()" style="
+    position:absolute;
+    bottom:30px;
+    left:50%;
+    transform:translateX(50%);
+    padding:15px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    background:#ff4081;
+    color:white;
+  
+">
+    Voltar 😏
+</button>
+
+<script>
+
+      function voltar() {
+    window.history.back();
+}
+
+    // 🔥 FUNDOS
+    const fundos = [
+        "imagemdireita.png",
+        "image.jpg"
+    ];
+
+    let indexFundo = 0;
+
+    function trocarFundo() {
+        document.body.style.backgroundImage = `url('${fundos[indexFundo]}')`;
+
+        indexFundo++;
+        if (indexFundo >= fundos.length) indexFundo = 0;
+    }
+
+    setInterval(trocarFundo, 5000);
+    trocarFundo();
+
+
+    // ⭐ ESTRELAS
+    function criarEstrela() {
+        let estrela = document.createElement("div");
+        estrela.classList.add("estrela");
+
+        let tamanho = Math.random() * 5 + 3;
+        estrela.style.width = tamanho + "px";
+        estrela.style.height = tamanho + "px";
+
+        estrela.style.left = Math.random() * 100 + "vw";
+        estrela.style.animationDuration = (Math.random() * 3 + 2) + "s";
+
+        document.body.appendChild(estrela);
+
+        setTimeout(() => estrela.remove(), 5000);
+    }
+
+    setInterval(criarEstrela, 150);
+
+
+    // 😈 IMAGENS LATERAIS
+    const imagensLaterais = [
+        "miau.png",
+        "image(1).jpg"
+    ];
+
+    function criarImagemLateral() {
+        let img = document.createElement("img");
+
+        img.src = imagensLaterais[Math.floor(Math.random() * imagensLaterais.length)];
+        img.classList.add("lateral");
+
+        let lado = Math.random() < 0.5 ? "esquerda" : "direita";
+
+        if (lado === "esquerda") {
+            img.style.left = "200px";
+            img.style.transform = "translateX(-50px)";
+        } else {
+            img.style.right = "200px";
+            img.style.transform = "translateX(50px)";
+        }
+
+        img.style.top = Math.random() * 80 + "%";
+
+        document.body.appendChild(img);
+
+        // aparece
+        setTimeout(() => {
+            img.style.opacity = "1";
+            img.style.transform = "translateX(0)";
+        }, 100);
+
+        // desaparece
+        setTimeout(() => {
+            img.style.opacity = "0";
+            setTimeout(() => img.remove(), 1000);
+        }, 3000);
+    }
+
+    // chance de aparecer
+    setInterval(() => {
+        if (Math.random() < 0.3) {
+            criarImagemLateral();
+        }
+    }, 2000);
+
+</script>
+
+</body>
+</html>

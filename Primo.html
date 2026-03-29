@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mensagem especial 👀</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+        color: white;
+        font-family: Arial;
+    }
+
+    #mensagem {
+        font-size: 22px;
+        text-align: center;
+    }
+
+    #video {
+        display: none;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
+</head>
+
+<body>
+
+<div id="mensagem">
+    Aguarde... mensagem especial carregando 👀
+</div>
+
+<audio id="audioInicio" src="Gravação.mp3"></audio>
+
+<video id="video" src="Vídeo de 💥_---Mateus 🤨🤔🫠---_💥.mp4"></video>
+
+<button id="btnVoltar" onclick="voltar()" style="
+    position:absolute;
+    bottom:30px;
+    left:50%;
+    transform:translateX(-50%);
+    padding:15px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    background:#ff4081;
+    color:white;
+    opacity:0;
+    pointer-events:none;
+    transition: opacity 2s ease;
+">
+    Voltar 😏
+</button>
+
+<script>
+    function voltar() {
+    window.history.back();
+}
+
+window.onload = () => {
+    let audio = document.getElementById("audioInicio");
+    let video = document.getElementById("video");
+    let msg = document.getElementById("mensagem");
+    let botao = document.getElementById("btnVoltar");
+
+    audio.play();
+
+    setTimeout(() => {
+        msg.style.display = "none";
+        video.style.display = "block";
+        video.play();
+    }, 15000);
+
+    // Quando o vídeo terminar
+    video.onended = () => {
+        botao.style.opacity = "1";
+        botao.style.pointerEvents = "auto";
+    };
+};
+</script>
+
+</body>
+</html>
