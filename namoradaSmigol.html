@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memórias 👀</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: black;
+        overflow: hidden;
+        font-family: Arial;
+    }
+
+    /* slideshow */
+    #slideshow {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+    }
+
+    #slideshow img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        opacity: 0;
+        transition: opacity 1s;
+    }
+
+    /* botão iniciar vídeos */
+    #btnVideo {
+        position: absolute;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 15px 25px;
+        font-size: 18px;
+        border: none;
+        border-radius: 10px;
+        background: #ff4081;
+        color: white;
+        cursor: pointer;
+    }
+
+    /* botão voltar */
+    #btnVoltar {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 12px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 10px;
+        background: #333;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    /* brilho no hover */
+    #btnVoltar:hover {
+        box-shadow: 0 0 15px #fff, 0 0 30px #ff4081;
+        background: #ff4081;
+    }
+
+    /* vídeo */
+    #videoContainer {
+        position: fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:black;
+        display:none;
+        justify-content:center;
+        align-items:center;
+    }
+
+    #videoContainer video {
+        width:100%;
+        height:100%;
+        object-fit: cover;
+    }
+
+</style>
+</head>
+
+<body>
+
+<!-- música -->
+<audio id="musicaFundo" src="Jão - Lábia (Lyric Video)(MP3_160K).mp3" autoplay loop></audio>
+
+<!-- slideshow -->
+<div id="slideshow"></div>
+
+<!-- botão -->
+<button id="btnVideo" onclick="iniciarVideos()">Ver vídeos 🎬</button>
+
+<!-- voltar -->
+<button id="btnVoltar" onclick="voltar()">Voltar</button>
+
+<!-- vídeos -->
+<div id="videoContainer">
+    <video id="videoPlayer" controls></video>
+    <button id="btnNext" onclick="proximoVideo()" style="
+    position:absolute;
+    bottom:30px;
+    right:20px;
+    padding:12px 20px;
+    font-size:16px;
+    border:none;
+    border-radius:10px;
+    background:#ff4081;
+    color:white;
+    cursor:pointer;
+">
+    Próximo ▶
+</button>
+</div>
+
+<script>
+    // 📸 IMAGENS
+    const imagens = [
+        "namoradaSmig.jpeg",
+        "namoradaSmig1.jpeg",
+        "namoradaSmig2.jpeg",
+        "namoradaSmig3.jpeg",
+        "namoradaSmig4.jpeg",
+        "namoradaSmig5.jpeg",
+        "namoradaSmig6.jpeg"
+    ];
+
+    let index = 0;
+
+    function trocarImagem() {
+        let container = document.getElementById("slideshow");
+
+        let img = document.createElement("img");
+        img.src = imagens[index];
+
+        container.appendChild(img);
+
+        setTimeout(() => {
+            img.style.opacity = "1";
+        }, 100);
+
+        setTimeout(() => {
+            img.style.opacity = "0";
+            setTimeout(() => img.remove(), 1000);
+        }, 3000);
+
+        index++;
+        if (index >= imagens.length) index = 0;
+    }
+
+    setInterval(trocarImagem, 3000);
+
+
+    // 🎬 VIDEOS
+    const videos = [
+        "namoradaSmigvid.mp4",
+        "namoradaSmigvid1.mp4",
+        "namoradaSmigvid2.mp4",
+        "namoradaSmigvid3.mp4"
+    ];
+
+    let indexVideo = 0;
+
+    function iniciarVideos() {
+    let container = document.getElementById("videoContainer");
+    let player = document.getElementById("videoPlayer");
+    let musica = document.getElementById("musicaFundo");
+
+    container.style.display = "flex";
+
+    // 🔉 abaixa música
+    musica.volume = 0.2;
+
+    player.src = videos[indexVideo];
+    player.play();
+
+    player.onended = () => {
+        proximoVideo();
+    };
+}
+function proximoVideo() {
+    let player = document.getElementById("videoPlayer");
+    let musica = document.getElementById("musicaFundo");
+
+    indexVideo++;
+
+    if (indexVideo < videos.length) {
+        player.src = videos[indexVideo];
+        player.play();
+    } else {
+        // acabou tudo
+        player.pause();
+        document.getElementById("videoContainer").style.display = "none";
+
+        // 🔊 volta música normal
+        musica.volume = 1;
+
+        indexVideo = 0;
+    }
+}
+
+    // 🔙 voltar
+    function voltar() {
+        window.history.back();
+    }
+</script>
+
+</body>
+</html>
