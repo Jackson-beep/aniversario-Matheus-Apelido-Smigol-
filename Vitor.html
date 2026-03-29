@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>???</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: url('fundoCaos') no-repeat center center/cover;
+        height: 100vh;
+        background-color: black;
+    }
+
+    .imgAleatoria {
+        position: absolute;
+        width: 80px;
+        animation: aparecer 3s ease;
+    }
+
+    @keyframes aparecer {
+        0% { transform: scale(0); opacity: 0; }
+        50% { transform: scale(1.2); opacity: 1; }
+        100% { transform: scale(1); opacity: 0; }
+    }
+
+</style>
+</head>
+
+<body>
+
+<audio id="somRaro" src="somRaro"></audio>
+<button id="btnVoltar" onclick="voltar()" style="
+    position:absolute;
+    bottom:30px;
+    left:50%;
+    transform:translateX(50%);
+    padding:15px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    background:#ff4081;
+    color:white;
+  
+">
+    Voltar 😏
+</button>
+
+<script>
+    function voltar() {
+    window.history.back();
+}
+    // imagens comuns
+    // cada imagem com seu som
+const imagens = [
+    "pinto3.webp",
+    "pinto2.webp",
+    "pinto1.webp"
+    
+];
+
+// sons aleatórios (para imagens comuns)
+const sons = [
+    "Desenho animado sons (Efeitos Sonoros)Som de Batidas(MP3_160K).mp3",
+    "Bruh sound effect(MP3_160K).mp3"
+    
+];
+
+const especial = {
+    img: "frango.jpg",
+    som: "galinha.mp3"
+};
+
+// imagem rara
+function criarImagem() {
+    let img = document.createElement("img");
+
+    // chance de ser especial
+    let isEspecial = Math.random() < 0.2;
+
+    let audio;
+
+    if (isEspecial) {
+        // imagem especial
+        img.src = especial.img;
+        audio = new Audio(especial.som);
+
+    } else {
+        // imagem normal
+        img.src = imagens[Math.floor(Math.random() * imagens.length)];
+
+        // 🔥 som aleatório
+        let somAleatorio = sons[Math.floor(Math.random() * sons.length)];
+        audio = new Audio(somAleatorio);
+    }
+
+    img.classList.add("imgAleatoria");
+
+    img.style.top = Math.random() * 100 + "%";
+    img.style.left = Math.random() * 100 + "%";
+
+    document.body.appendChild(img);
+
+    audio.play();
+
+    // 🔥 imagem só some quando o som terminar
+    audio.onended = () => {
+        img.remove();
+    };
+}
+
+
+
+    // gera imagens constantemente
+    setInterval(criarImagem, 500);
+</script>
+
+</body>
+</html>

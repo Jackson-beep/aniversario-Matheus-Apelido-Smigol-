@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Last Dance 💀</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: black;
+        color: white;
+        font-family: Arial;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+    }
+
+    #texto {
+        font-size: 22px;
+        max-width: 80%;
+        transition: 1s;
+    }
+
+    /* glitch */
+    .glitch {
+        animation: glitch 0.2s infinite;
+    }
+
+    @keyframes glitch {
+        0% { transform: translate(2px, -2px); }
+        25% { transform: translate(-2px, 2px); }
+        50% { transform: translate(2px, 2px); }
+        75% { transform: translate(-2px, -2px); }
+        100% { transform: translate(0,0); }
+    }
+
+    /* imagens rápidas */
+    .flash {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+    }
+
+    /* botão troll */
+    #btnFinal {
+        position: absolute;
+        bottom: 30px;
+        padding: 15px 25px;
+        font-size: 18px;
+        border: none;
+        border-radius: 10px;
+        background: #ff0000;
+        color: white;
+        cursor: pointer;
+        display: none;
+    }
+
+</style>
+</head>
+
+<body>
+
+<div id="texto">
+    Cara... a gente zoa muito, mas hoje é seu dia.<br><br>
+    Feliz aniversário de verdade 🎉
+</div>
+
+<audio id="musica" src="round.mp3" autoplay></audio>
+<audio id="caos" src="galinha.mp3"></audio>
+<audio id="susto" src="foxy jumpscare  fnaf 2(MP3_160K).mp3"></audio>
+
+<img id="flashImg" class="flash">
+
+<button id="btnFinal">Sair...?</button>
+
+<script>
+
+let texto = document.getElementById("texto");
+let musica = document.getElementById("musica");
+let caos = document.getElementById("caos");
+let susto = document.getElementById("susto");
+let flash = document.getElementById("flashImg");
+let btn = document.getElementById("btnFinal");
+
+// 📸 imagens caóticas
+const imagens = [
+    "namoradaSmig6.jpeg",
+    "namoradaSmig5.jpeg",
+    "miau.png",
+    "Foto de 💥_---Mateus 🤨🤔🫠---_💥(2).jpg",
+    "Smigol FDP.jpg",
+    "smigol.jpg",
+    "smigol1.png",
+    "smigol3.png",
+    "smigol5.png",
+    "smigol6.png",
+    "smigol7.png",
+    "smigol8.png",
+    "smigol9.png",
+    "smigol10.jpg",
+    "smigol12.png"
+
+];
+
+// 🔥 FASE 1 - mensagem normal
+setTimeout(() => {
+    texto.innerHTML = "Mas... nem tudo é o que parece 👀";
+}, 4000);
+
+// 🔥 FASE 2 - glitch começa
+setTimeout(() => {
+    texto.classList.add("glitch");
+    caos.play();
+}, 7000);
+
+// 🔥 sistema shuffle (mostra todas antes de repetir)
+let fila = [];
+
+function embaralhar(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+function novaFila() {
+    fila = embaralhar([...imagens]);
+}
+
+// 🔥 FASE 3 - imagens piscando (com controle)
+setTimeout(() => {
+
+    novaFila();
+
+    setInterval(() => {
+
+        if (fila.length === 0) {
+            novaFila();
+        }
+
+        let imagemAtual = fila.pop();
+
+        flash.src = imagemAtual;
+        flash.style.opacity = "1";
+
+        setTimeout(() => {
+            flash.style.opacity = "0";
+        }, 250);
+
+    }, 300);
+
+}, 9000);
+
+// 💀 FASE FINAL - SUSTO
+setTimeout(() => {
+
+    let tela = document.createElement("div");
+
+    tela.style.position = "fixed";
+    tela.style.top = "0";
+    tela.style.left = "0";
+    tela.style.width = "100%";
+    tela.style.height = "100%";
+    tela.style.background = "black";
+    tela.style.display = "flex";
+    tela.style.justifyContent = "center";
+    tela.style.alignItems = "center";
+
+    let img = document.createElement("img");
+    img.src = "gif-20260328-173457.gif";
+    img.style.width = "100%";
+    img.style.height = "100%";
+    img.style.objectFit = "cover";
+
+    tela.appendChild(img);
+    document.body.appendChild(tela);
+
+    // 🔊 som do susto
+    susto.currentTime = 0;
+    susto.play();
+
+    // depois troca pra imagem final
+    setTimeout(() => {
+
+        img.src = "big-monke-flips-you-off-what-u-do-v0-861gk9gqka0c1.webp";
+        img.style.objectFit = "contain";
+
+        // 🔥 áudio da imagem final
+        let audioFinal = new Audio("gravaçãofinal.mp3");
+        audioFinal.play();
+
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 2000);
+
+    }, 3000);
+
+}, 15000);
+
+</script>
+
+</body>
+</html>
